@@ -106,10 +106,10 @@ def main():
 		exit()
 	connectivity_ratio = float(sys.argv[3])
 	nodeCount = int(sys.argv[2])
-		if len(sys.argv	< 5):
-			limit = 100 * nodeCount
-		else:
-			limit = int(sys.argv[4])
+	if len(sys.argv) < 5:
+		limit = 100 * nodeCount
+	else:
+		limit = int(sys.argv[4])
 	g = buildGraph(readFile(sys.argv[1]), int(sys.argv[2]), limit)
 	subg = getSubgraph(g, nodeCount, connectivity_ratio)
 	bfsGraph = bfs(subg, nodeCount)
