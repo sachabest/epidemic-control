@@ -15,16 +15,25 @@ def readFile(filename):
 		data = zf.open(file, 'r')
 	return data
 
-def buildGraph(data):
+def buildGraph(data, size, limit):
 	g = nx.Graph()
-	lines = data.readlines()
-	for line in lines:
+	count = 0
+	# lets cap this at 10000
+	# lines = data.readlines()
+	if not limit:
+		limit = 100 * size
+	for line in data:
 		# print line
+		count = count + 1
 		words = line.split(' ')
 		if len(words) > 2 and words[0].isdigit():
 			node1 = int(words[0])
 			node2 = int(words[2])
 			g.add_edge(node1, node2)
+		if count % 100 == 0:
+			print count
+		if count > limit:
+			break
 	return g
 
 # keep track of what componenets we have already searched
@@ -35,6 +44,7 @@ components_searched = set()
 # connected_componenets returns a the componenets in descending size order
 # so we get random to make sure our entire group does not have the same subgraph
 def get_components_random(graph, size):
+	# print 'call get components random with ' + str(len(components_searched)) + ' components searched'
 	num_lists = nx.number_connected_components(graph)
 	lists = nx.connected_components(graph)
 	i = int(random.randrange(num_lists))
@@ -52,13 +62,14 @@ def get_components_random(graph, size):
 
 # generates a subgraph of a connected component in the larger graph
 # by randomly selecting a component each time
-def getSubgraph(graph, size):
+def getSubgraph(graph, size, connectivity_ratio):
 	nodes = set()
-	
-	while len(nodes) <= size:
+	# buffer size by 4 to handle connectivity problems
+	while len(nodes) <= connectivity_ratio * size:
+		print len(nodes)
+		print connectivity_ratio * size
 		comp = get_components_random(graph, size)
 		nodes.update(comp)
-	print nodes
 	return nx.subgraph(graph, nodes)
 
 # keep track of random nodes started for bfs
@@ -81,21 +92,28 @@ def bfs(graph, size):
 	print edges
 	for edge in edges:
 		newGraph.add_edge(edge[0], edge[1])
-		if (nx.number_of_nodes(newGraph) > size):
-			print nx.nodes(newGraph)
+		print 'nodes: ' + str(nx.number_of_nodes(newGraph)) + ' required ' + str(size)
+		if (nx.number_of_nodes(newGraph) >= size):
+			# print nx.nodes(newGraph)
 			return newGraph
+	print 'did not generate enough nodes from connected components. Try a higher connectivity ratio'
+	exit()
 
 # main method
 def main():
-	if len(sys.argv) < 3:
-		print 'Usage: project1.py filename nodecount'
+	if len(sys.argv) < 4:
+		print 'Usage: project1.py filename nodecount connectivity_ratio explore_limit'
 		exit()
-
-	g = buildGraph(readFile(sys.argv[1]))
+	connectivity_ratio = float(sys.argv[3])
 	nodeCount = int(sys.argv[2])
-	subg = getSubgraph(g, nodeCount)
+		if len(sys.argv	< 5):
+			limit = 100 * nodeCount
+		else:
+			limit = int(sys.argv[4])
+	g = buildGraph(readFile(sys.argv[1]), int(sys.argv[2]), limit)
+	subg = getSubgraph(g, nodeCount, connectivity_ratio)
 	bfsGraph = bfs(subg, nodeCount)
-	print nx.nodes(bfsGraph)
+	print bfsGraph
 	nx.write_edgelist(bfsGraph, 'out.txt')
 
 if __name__ == '__main__':
