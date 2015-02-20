@@ -27,6 +27,7 @@ def buildGraph(data, size, limit):
 			node2 = int(words[2])
 			if node1 < limit and node2 < limit:
 				g.add_edge(node1, node2)
+				g.add_edge(node2, node1)
 	return g
 
 # keep track of what componenets we have already searched
@@ -50,7 +51,7 @@ def get_components_random(graph, size):
 	while comp is not None and i in components_searched and len(components_searched) < num_lists:
 		i = i + 1;
 		comp = comp_list[i]
-		print comp
+		# print comp
 		# print "getting next component"
 		components_searched.add(i);
 	return comp
@@ -62,7 +63,7 @@ def getSubgraph(graph, size, connectivity_ratio):
 	lists = nx.connected_components(graph)
 	for component in lists:
 		if (len(nodes)) < size: 
-			print 'component size' + str(len(components))
+			print 'component size ' + str(len(component))
 			nodes.update(component)
 	# buffer size by 4 to handle connectivity problems
 	#while len(nodes) <= connectivity_ratio * size:
@@ -80,21 +81,24 @@ nodes_searched = set()
 # runs a bfs on the graph to grab nodes out of it
 def bfs(graph, size):
 	newGraph = nx.Graph()
-	edges = set()
-	node_count = len(nx.nodes(graph))
+	edges = list()
+	node_count = nx.number_of_nodes(graph)
 	# random-restart bfs untill enough nodes are in the set
 	i = int(random.randrange(node_count))
 	while len(edges) < size:
-		edges.update(nx.bfs_edges(graph, nx.nodes(graph)[i], False))
+
+		edges.extend(nx.bfs_edges(graph, nx.nodes(graph)[i], False))
+		print 'edges after one bfs: ' + str(len(edges))
 		nodes_searched.add(i)
 		# generate new random number
 		while i in nodes_searched:
 			i = int(random.randrange(node_count))
 
-	print edges
+	# print edges
 	for edge in edges:
 		newGraph.add_edge(edge[0], edge[1])
-		print 'nodes: ' + str(nx.number_of_nodes(newGraph)) + ' required ' + str(size)
+		newGraph.add_edge(edge[1], edge[0])
+		# print 'nodes: ' + str(nx.number_of_nodes(newGraph)) + ' required ' + str(size)
 		if (nx.number_of_nodes(newGraph) >= size):
 			# print nx.nodes(newGraph)
 			return newGraph
