@@ -17,23 +17,17 @@ def readFile(filename):
 
 def buildGraph(data, size, limit):
 	g = nx.Graph()
-	count = 0
-	# lets cap this at 10000
-	# lines = data.readlines()
-	if not limit:
-		limit = 100 * size
-	for line in data:
+	for index, line in enumerate(data):
 		# print line
-		count = count + 1
 		words = line.split(' ')
+		if index % 1000000 == 0:
+			print index
 		if len(words) > 2 and words[0].isdigit():
 			node1 = int(words[0])
 			node2 = int(words[2])
-			g.add_edge(node1, node2)
-		if count % 100 == 0:
-			print count
-		if count > limit:
-			break
+			if node1 < limit and node2 < limit:
+				g.add_edge(node1, node2)
+				g.add_edge(node2, node1)
 	return g
 
 # keep track of what componenets we have already searched
@@ -47,15 +41,17 @@ def get_components_random(graph, size):
 	# print 'call get components random with ' + str(len(components_searched)) + ' components searched'
 	num_lists = nx.number_connected_components(graph)
 	lists = nx.connected_components(graph)
-	i = int(random.randrange(num_lists))
+	i = 0;
 	comp_list = list(lists)
 	comp = comp_list[i]
 	if len(components_searched) == 0:
 		components_searched.add(i)
+		return comp;
 	# this will cause in a infinite loop with graphs less than 1000 nodes
 	while comp is not None and i in components_searched and len(components_searched) < num_lists:
-		i = random.randrange(num_lists)
+		i = i + 1;
 		comp = comp_list[i]
+		# print comp
 		# print "getting next component"
 		components_searched.add(i);
 	return comp
@@ -64,12 +60,19 @@ def get_components_random(graph, size):
 # by randomly selecting a component each time
 def getSubgraph(graph, size, connectivity_ratio):
 	nodes = set()
+	lists = nx.connected_components(graph)
+	for component in lists:
+		if (len(nodes)) < size: 
+			print 'component size ' + str(len(component))
+			nodes.update(component)
 	# buffer size by 4 to handle connectivity problems
-	while len(nodes) <= connectivity_ratio * size:
-		print len(nodes)
-		print connectivity_ratio * size
-		comp = get_components_random(graph, size)
-		nodes.update(comp)
+	#while len(nodes) <= connectivity_ratio * size:
+		# print len(nodes)
+		# print connectivity_ratio * size
+
+
+		# comp = get_components_random(graph, size)
+		# nodes.update(comp)
 	return nx.subgraph(graph, nodes)
 
 # keep track of random nodes started for bfs
@@ -78,21 +81,24 @@ nodes_searched = set()
 # runs a bfs on the graph to grab nodes out of it
 def bfs(graph, size):
 	newGraph = nx.Graph()
-	edges = set()
-	node_count = len(nx.nodes(graph))
+	edges = list()
+	node_count = nx.number_of_nodes(graph)
 	# random-restart bfs untill enough nodes are in the set
 	i = int(random.randrange(node_count))
 	while len(edges) < size:
-		edges.update(nx.bfs_edges(graph, nx.nodes(graph)[i], False))
+
+		edges.extend(nx.bfs_edges(graph, nx.nodes(graph)[i], False))
+		print 'edges after one bfs: ' + str(len(edges))
 		nodes_searched.add(i)
 		# generate new random number
 		while i in nodes_searched:
 			i = int(random.randrange(node_count))
 
-	print edges
+	# print edges
 	for edge in edges:
 		newGraph.add_edge(edge[0], edge[1])
-		print 'nodes: ' + str(nx.number_of_nodes(newGraph)) + ' required ' + str(size)
+		newGraph.add_edge(edge[1], edge[0])
+		# print 'nodes: ' + str(nx.number_of_nodes(newGraph)) + ' required ' + str(size)
 		if (nx.number_of_nodes(newGraph) >= size):
 			# print nx.nodes(newGraph)
 			return newGraph
@@ -111,9 +117,11 @@ def main():
 	else:
 		limit = int(sys.argv[4])
 	g = buildGraph(readFile(sys.argv[1]), int(sys.argv[2]), limit)
+	print 'graph loaded'
 	subg = getSubgraph(g, nodeCount, connectivity_ratio)
+	print 'subgraph loaded'
 	bfsGraph = bfs(subg, nodeCount)
-	print bfsGraph
+	print 'bfs finished'
 	nx.write_edgelist(bfsGraph, 'out.txt')
 
 if __name__ == '__main__':
