@@ -31,180 +31,180 @@ class Models():
 		self.time = 1000 #default used in the paper
 
 
-def SISmodel():
-	for i in xrange(self.time):
-		#each of these nodes should be of type Node class in node.py
-		for node in self.nodes:
-			if node.getState() == 'SUSCEPTIBLE':
-				for neighbor in node.getNeighbors():
-					if neighbor.getState() == 'INFECTED':
-						success = node.flipCoin(self.beta, 'INFECTED')
-						#stop looping through the neighbors if the node we're looking at is infected
-						if success:
-							break
-			elif node.getState() == 'INFECTED':
-				node.flipCoin(self.delta, 'SUSCEPTIBLE')
+	def SISmodel(self):
+		for i in xrange(self.time):
+			#each of these nodes should be of type Node class in node.py
+			for node in self.nodes:
+				if node.getState() == 'SUSCEPTIBLE':
+					for neighbor in node.getNeighbors():
+						if neighbor.getState() == 'INFECTED':
+							success = node.flipCoin(self.beta, 'INFECTED')
+							#stop looping through the neighbors if the node we're looking at is infected
+							if success:
+								break
+				elif node.getState() == 'INFECTED':
+					node.flipCoin(self.delta, 'SUSCEPTIBLE')
 
-'''
-SIR Model
-for each time step:
-	for each node:
-		if susceptible, look at neighbors
-			for each neighbor
-				if neighbor is infected, flipCoin on beta with potentialState='INFECTED'
-				else do nothing
-				break when the current node we're looking at gets infected
-		if infected 
-			flipCoin on delta with potentialState='RECOVERED'
-		if recovered, do nothing
-'''
+	'''
+	SIR Model
+	for each time step:
+		for each node:
+			if susceptible, look at neighbors
+				for each neighbor
+					if neighbor is infected, flipCoin on beta with potentialState='INFECTED'
+					else do nothing
+					break when the current node we're looking at gets infected
+			if infected 
+				flipCoin on delta with potentialState='RECOVERED'
+			if recovered, do nothing
+	'''
 
-def SIRmodel():
-	for i in xrange(self.time):
-		for node in self.nodes:
-			if node.getState() == 'SUSCEPTIBLE':
-				for neighbor in node.getNeighbors():
-					if neighbor.getState() == 'INFECTED':
-						success = node.flipCoin(self.beta, 'INFECTED')
-						#stop looping through the neighbors if the node we're looking at is infected
-						if success:
-							break
-			elif node.getState() == 'INFECTED':
-				node.flipCoin(self.delta, 'RECOVERED')
+	def SIRmodel(self):
+		for i in xrange(self.time):
+			for node in self.nodes:
+				if node.getState() == 'SUSCEPTIBLE':
+					for neighbor in node.getNeighbors():
+						if neighbor.getState() == 'INFECTED':
+							success = node.flipCoin(self.beta, 'INFECTED')
+							#stop looping through the neighbors if the node we're looking at is infected
+							if success:
+								break
+				elif node.getState() == 'INFECTED':
+					node.flipCoin(self.delta, 'RECOVERED')
 
-'''
-SIRS Model
-for each time step:
-	for each node:
-		if susceptible, look at neighbors
-			for each neighbor
-				if neighbor is infected, flipCoin on beta with potentialState='INFECTED'
-				else do nothing
-				break when the current node we're looking at gets infected
-		if infected 
-			flipCoin on delta with potentialState='RECOVERED'
-		if recovered
-			flipCoin on gamma with potentialState='SUSCEPTIBLE'
-'''
+	'''
+	SIRS Model
+	for each time step:
+		for each node:
+			if susceptible, look at neighbors
+				for each neighbor
+					if neighbor is infected, flipCoin on beta with potentialState='INFECTED'
+					else do nothing
+					break when the current node we're looking at gets infected
+			if infected 
+				flipCoin on delta with potentialState='RECOVERED'
+			if recovered
+				flipCoin on gamma with potentialState='SUSCEPTIBLE'
+	'''
 
-def SIRSmodel():
-	for i in xrange(self.time):
-		for node in self.nodes:
-			if node.getState() == 'SUSCEPTIBLE':
-				for neighbor in node.getNeighbors():
-					if neighbor.getState() == 'INFECTED':
-						success = node.flipCoin(self.beta, 'INFECTED')
-						#stop looping through the neighbors if the node we're looking at is infected
-						if success:
-							break
-			elif node.getState() == 'INFECTED':
-				node.flipCoin(self.delta, 'RECOVERED')
-			elif node.getState() == 'RECOVERED':
-				node.flipCoin(self.gamma, 'SUSCEPTIBLE')
+	def SIRSmodel(self):
+		for i in xrange(self.time):
+			for node in self.nodes:
+				if node.getState() == 'SUSCEPTIBLE':
+					for neighbor in node.getNeighbors():
+						if neighbor.getState() == 'INFECTED':
+							success = node.flipCoin(self.beta, 'INFECTED')
+							#stop looping through the neighbors if the node we're looking at is infected
+							if success:
+								break
+				elif node.getState() == 'INFECTED':
+					node.flipCoin(self.delta, 'RECOVERED')
+				elif node.getState() == 'RECOVERED':
+					node.flipCoin(self.gamma, 'SUSCEPTIBLE')
 
-'''
-SIV Model
-for each time step:
-	for each node:
-		if susceptible, look at neighbors
-			for each neighbor
-				if neighbor is infected, flipCoin on beta with potentialState='INFECTED'
-				else do nothing
-				break when the current node we're looking at gets infected
-		if still susceptible
-			flipCoin on theta with potentialState'VIGILANT'
-		if infected 
-			flipCoin on delta with potentialState='VIGILANT'
-		if vigilant
-			flipCoin on gamma with potentialState='SUSCEPTIBLE'
-'''
+	'''
+	SIV Model
+	for each time step:
+		for each node:
+			if susceptible, look at neighbors
+				for each neighbor
+					if neighbor is infected, flipCoin on beta with potentialState='INFECTED'
+					else do nothing
+					break when the current node we're looking at gets infected
+			if still susceptible
+				flipCoin on theta with potentialState'VIGILANT'
+			if infected 
+				flipCoin on delta with potentialState='VIGILANT'
+			if vigilant
+				flipCoin on gamma with potentialState='SUSCEPTIBLE'
+	'''
 
-def SIVmodel():
-	for i in xrange(self.time):
-		for node in self.nodes:
-			if node.getState() == 'SUSCEPTIBLE':
-				for neighbor in node.getNeighbors():
-					if neighbor.getState() == 'INFECTED':
-						success = node.flipCoin(self.beta, 'INFECTED')
-						#stop looping through the neighbors if the node we're looking at is infected
-						if success:
-							break
-			if node.getState() == 'SUSCEPTIBLE':
-				node.flipCoin(self.theta, 'VIGILANT')
-			elif node.getState() == 'INFECTED':
-				node.flipCoin(self.delta, 'VIGILANT')
-			elif node.getState() == 'VIGILANT':
-				node.flipCoin(self.gamma, 'SUSCEPTIBLE')
+	def SIVmodel(self):
+		for i in xrange(self.time):
+			for node in self.nodes:
+				if node.getState() == 'SUSCEPTIBLE':
+					for neighbor in node.getNeighbors():
+						if neighbor.getState() == 'INFECTED':
+							success = node.flipCoin(self.beta, 'INFECTED')
+							#stop looping through the neighbors if the node we're looking at is infected
+							if success:
+								break
+				if node.getState() == 'SUSCEPTIBLE':
+					node.flipCoin(self.theta, 'VIGILANT')
+				elif node.getState() == 'INFECTED':
+					node.flipCoin(self.delta, 'VIGILANT')
+				elif node.getState() == 'VIGILANT':
+					node.flipCoin(self.gamma, 'SUSCEPTIBLE')
 
-'''
-SEIR Model
-for each time step:
-	for each node:
-		if susceptible, look at neighbors
-			for each neighbor
-				if neighbor is infected, flipCoin on beta with potentialState='EXPOSED'
-				else do nothing
-				break when the current node we're looking at gets infected
-		if exposed:
-			flipCoin on epsilon with potentialState='INFECTED'
-		if infected:
-			flipCoin on delta with potentialState='RECOVERED'
-		if recovered:
-			flipCoin on gamma with potentialState='SUSCEPTIBLE'
-'''
+	'''
+	SEIR Model
+	for each time step:
+		for each node:
+			if susceptible, look at neighbors
+				for each neighbor
+					if neighbor is infected, flipCoin on beta with potentialState='EXPOSED'
+					else do nothing
+					break when the current node we're looking at gets infected
+			if exposed:
+				flipCoin on epsilon with potentialState='INFECTED'
+			if infected:
+				flipCoin on delta with potentialState='RECOVERED'
+			if recovered:
+				flipCoin on gamma with potentialState='SUSCEPTIBLE'
+	'''
 
-def SEIRmodel():
-	for i in xrange(self.time):
-		for node in self.nodes:
-			if node.getState() == 'SUSCEPTIBLE':
-				for neighbor in node.getNeighbors():
-					if neighbor.getState() == 'INFECTED':
-						success = node.flipCoin(self.beta, 'EXPOSED')
-						#stop looping through the neighbors if the node we're looking at is exposed
-						if success:
-							break
-			elif node.getState() == 'EXPOSED':
-				node.flipCoin(self.epsilon, 'INFECTED')
-			elif node.getState() == 'INFECTED':
-				node.flipCoin(self.delta, 'RECOVERED')
-			elif node.getState() == 'RECOVERED':
-				node.flipCoin(self.gamma, 'SUSCEPTIBLE')
+	def SEIRmodel(self):
+		for i in xrange(self.time):
+			for node in self.nodes:
+				if node.getState() == 'SUSCEPTIBLE':
+					for neighbor in node.getNeighbors():
+						if neighbor.getState() == 'INFECTED':
+							success = node.flipCoin(self.beta, 'EXPOSED')
+							#stop looping through the neighbors if the node we're looking at is exposed
+							if success:
+								break
+				elif node.getState() == 'EXPOSED':
+					node.flipCoin(self.epsilon, 'INFECTED')
+				elif node.getState() == 'INFECTED':
+					node.flipCoin(self.delta, 'RECOVERED')
+				elif node.getState() == 'RECOVERED':
+					node.flipCoin(self.gamma, 'SUSCEPTIBLE')
 
-'''
-SEIV Model
-for each time step:
-	for each node:
-		if susceptible, look at neighbors
-			for each neighbor
-				if neighbor is infected, flipCoin on beta with potentialState='EXPOSED'
-				else do nothing
-				break when the current node we're looking at gets infected
-		if still susceptible:
-			flipCoin on theta with potentialState='VIGILANT'
-		if exposed:
-			flipCoin on epsilon with potentialState='INFECTED'
-		if infected:
-			flipCoin on delta with potentialState='RECOVERED'
-		if recovered:
-			flipCoin on gamma with potentialState='SUSCEPTIBLE'
+	'''
+	SEIV Model
+	for each time step:
+		for each node:
+			if susceptible, look at neighbors
+				for each neighbor
+					if neighbor is infected, flipCoin on beta with potentialState='EXPOSED'
+					else do nothing
+					break when the current node we're looking at gets infected
+			if still susceptible:
+				flipCoin on theta with potentialState='VIGILANT'
+			if exposed:
+				flipCoin on epsilon with potentialState='INFECTED'
+			if infected:
+				flipCoin on delta with potentialState='RECOVERED'
+			if recovered:
+				flipCoin on gamma with potentialState='SUSCEPTIBLE'
 
-'''
+	'''
 
-def SEIVmodel():
-	for i in xrange(self.time):
-		for node in self.nodes:
-			if node.getState() == 'SUSCEPTIBLE':
-				for neighbor in node.getNeighbors():
-					if neighbor.getState() == 'INFECTED':
-						success = node.flipCoin(self.beta, 'EXPOSED')
-						#stop looping through the neighbors if the node we're looking at is exposed
-						if success:
-							break
-			if node.getState() == 'SUSCEPTIBLE':
-				node.flipCoin(self.theta, 'VIGILANT')
-			elif node.getState() == 'EXPOSED':
-				node.flipCoin(self.epsilon, 'INFECTED')
-			elif node.getState() == 'INFECTED':
-				node.flipCoin(self.delta, 'VIGILANT')
-			elif node.getState() == 'VIGILANT':
-				node.flipCoin(self.gamma, 'SUSCEPTIBLE')
+	def SEIVmodel(self):
+		for i in xrange(self.time):
+			for node in self.nodes:
+				if node.getState() == 'SUSCEPTIBLE':
+					for neighbor in node.getNeighbors():
+						if neighbor.getState() == 'INFECTED':
+							success = node.flipCoin(self.beta, 'EXPOSED')
+							#stop looping through the neighbors if the node we're looking at is exposed
+							if success:
+								break
+				if node.getState() == 'SUSCEPTIBLE':
+					node.flipCoin(self.theta, 'VIGILANT')
+				elif node.getState() == 'EXPOSED':
+					node.flipCoin(self.epsilon, 'INFECTED')
+				elif node.getState() == 'INFECTED':
+					node.flipCoin(self.delta, 'VIGILANT')
+				elif node.getState() == 'VIGILANT':
+					node.flipCoin(self.gamma, 'SUSCEPTIBLE')

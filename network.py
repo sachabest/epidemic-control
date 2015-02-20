@@ -21,8 +21,13 @@ class Network():
         for n in g:
             node_n = node.Node(n)
             for n2 in g.neighbors(n):
-                node_n.addNeighbor(n2)
-            nodes.update(node_n, n)
+                # vincent - you needed to make this into another node object
+                # otherwise its just a str
+                # node_n.addNeighbor(n2)
+                node_n2 = node.Node(n2)
+                node_n.addNeighbor(node_n2)
+                node_n2.addNeighbor(node_n)
+            nodes[node_n] = n
         self.theNodes = nodes
 
     def getGraph(self):

@@ -7,7 +7,7 @@ class Node:
 		#Options include: 'SUSCEPTIBLE', 'INFECTED', 'VIGILANT', 'RECOVERED', 'EXPOSED'
 		self.possible_states = ['SUSCEPTIBLE', 'INFECTED', 'VIGILANT', 'RECOVERED', 'EXPOSED']
 		self.state = 'SUSCEPTIBLE'
-		self.neighbors = []
+		self.neighbors = list()
 
 	def flipCoin(self, prob, potentialState):
 		#takes in a probability and a potential state that it could change to
