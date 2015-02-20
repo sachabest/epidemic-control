@@ -29,8 +29,8 @@ class Node:
 			return True 
 		return False
 
-	def addNeighbor(n_id):
-		self.neighbors.append(n_id)
+	def addNeighbor(n):
+		self.neighbors.append(n)
 
 	def getDegree():
 		return len(self.neighbors)
