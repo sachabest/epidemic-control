@@ -30,6 +30,14 @@ class Models():
 		self.theta = 0.1
 		self.time = 1000 #default used in the paper
 
+	def __init__(self, nodes, b, d, g, e, th, ti):
+		self.nodes = nodes
+		self.beta = b
+		self.delta = d
+		self.gamma = g
+		self.epsilon = e
+		self.theta = th
+		self.time = ti #default used in the paper
 
 	def SISmodel(self):
 		for i in xrange(self.time):
