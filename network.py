@@ -1,15 +1,16 @@
 import networkx as nx
 import sys
+import node
 
-class network: 
+class Network(): 
 
     def __init__(self):
         self.graph = nx.Graph()
         self.theNodes = dict()
 
-    def createNetwork():
+    def createNetwork(filename):
         g = nx.Graph()
-        f = open(sys.argv[1], 'r')
+        f = open(filename)
         for line in f:
     	   l = line.split
     	   if not(l[0] in nodes):
@@ -20,12 +21,12 @@ class network:
         self.graph = g
 
     def createNodes(g):
-	   nodes = dict()
-	   for n in g:
-		  node = Node(n)
-		  for n2 in g.neighbors(n):
-			 node.addNeighbor(n2)
-		  nodes.update(node, n)
+	    nodes = dict()
+	    for n in g:
+		    node = Node(n)
+		    for n2 in g.neighbors(n):
+			    node.addNeighbor(n2)
+		    nodes.update(node, n)
         self.theNodes = nodes
 
     def getGraph():
