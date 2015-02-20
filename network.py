@@ -8,29 +8,25 @@ class Network():
         self.graph = nx.Graph()
         self.theNodes = dict()
 
-    def createNetwork(filename):
+    def createNetwork(self, filename):
         g = nx.Graph()
-        f = open(filename)
+        f = open(filename, 'r')
         for line in f:
-            l = line.split
-            if not(l[0] in nodes):
-                g.add_node(l[0])
-            if not(l[1] in nodes):
-                g.add_node(l[1])
+            l = line.split(' ')
             g.add_edge(l[0], l[1])
         self.graph = g
 
-    def createNodes(g):
+    def createNodes(self, g):
         nodes = dict()
         for n in g:
-            node = Node(n)
+            node_n = node.Node(n)
             for n2 in g.neighbors(n):
-                node.addNeighbor(n2)
-            nodes.update(node, n)
+                node_n.addNeighbor(n2)
+            nodes.update(node_n, n)
         self.theNodes = nodes
 
-    def getGraph():
+    def getGraph(self):
         return self.graph
 
-    def getNodes():
+    def getNodes(self):
         return self.theNodes

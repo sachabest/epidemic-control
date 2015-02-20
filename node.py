@@ -9,7 +9,7 @@ class Node:
 		self.state = 'SUSCEPTIBLE'
 		self.neighbors = []
 
-	def flipCoin(prob, potentialState):
+	def flipCoin(self, prob, potentialState):
 		#takes in a probability and a potential state that it could change to
 		#returns true if the state was changed and false otherwise
 		if not potentialState in self.possible_states:
@@ -20,23 +20,23 @@ class Node:
 		return False
 
 
-	def getState():
+	def getState(self):
 		return self.state
 
-	def setState(newState):
+	def setState(self, newState):
 		if newState in self.possible_states:
 			self.state = newState
 			return True 
 		return False
 
-	def addNeighbor(n):
+	def addNeighbor(self, n):
 		self.neighbors.append(n)
 
-	def getDegree():
+	def getDegree(self):
 		return len(self.neighbors)
 
-	def getNeighbors():
+	def getNeighbors(self):
 		return self.neighbors
 
-	def getThis():
+	def getThis(self):
 		return self
