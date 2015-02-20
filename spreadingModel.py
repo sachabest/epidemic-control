@@ -36,11 +36,13 @@ class Models():
 			#each of these nodes should be of type Node class in node.py
 			for node in self.nodes:
 				if node.getState() == 'SUSCEPTIBLE':
+					#print 'changing neighbors of' + str(node.id)
 					for neighbor in node.getNeighbors():
 						if neighbor.getState() == 'INFECTED':
 							success = node.flipCoin(self.beta, 'INFECTED')
 							#stop looping through the neighbors if the node we're looking at is infected
 							if success:
+								node.setState('INFECTED')
 								break
 				elif node.getState() == 'INFECTED':
 					node.flipCoin(self.delta, 'SUSCEPTIBLE')
