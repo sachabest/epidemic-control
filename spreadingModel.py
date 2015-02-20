@@ -21,7 +21,8 @@ for each time step:
 
 class Models():
 	def __init__(self, nodes):
-		self.nodes = nodes
+		
+		self.nodes = nodes.values()
 		# I made all these up, feel free to change
 		self.beta = 0.3
 		self.delta = 0.3
@@ -31,7 +32,7 @@ class Models():
 		self.time = 1000 #default used in the paper
 
 	def __init__(self, nodes, b, d, g, e, th, ti):
-		self.nodes = nodes
+		self.nodes = nodes.values()
 		self.beta = b
 		self.delta = d
 		self.gamma = g
