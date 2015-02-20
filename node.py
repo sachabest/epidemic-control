@@ -2,13 +2,12 @@ import random
 
 class Node:
 
-	def __init__(self, id, nxn):
+	def __init__(self, id):
 		self.id = id #node id, should be an int
 		#Options include: 'SUSCEPTIBLE', 'INFECTED', 'VIGILANT', 'RECOVERED', 'EXPOSED'
 		self.possible_states = ['SUSCEPTIBLE', 'INFECTED', 'VIGILANT', 'RECOVERED', 'EXPOSED']
 		self.state = 'SUSCEPTIBLE'
 		self.neighbors = []
-		self.nxn = nxn
 
 	def flipCoin(prob, potentialState):
 		#takes in a probability and a potential state that it could change to
@@ -19,9 +18,6 @@ class Node:
 			self.state = potentialState
 			return True 
 		return False
-
-	def getNetworkxNode():
-		return self.nxn
 
 
 	def getState():
