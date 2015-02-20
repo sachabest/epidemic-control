@@ -37,7 +37,7 @@ class Models():
 		self.gamma = g
 		self.epsilon = e
 		self.theta = th
-		self.time = ti #default used in the paper
+		self.time = ti
 
 	def SISmodel(self):
 		for i in xrange(self.time):
