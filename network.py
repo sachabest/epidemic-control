@@ -22,7 +22,7 @@ class Network():
             node_n = node.Node(n)
             for n2 in g.neighbors(n):
                 node_n.addNeighbor(n2)
-            nodes.update(node_n, n)
+            nodes[node_n] = n
         self.theNodes = nodes
 
     def getGraph(self):
