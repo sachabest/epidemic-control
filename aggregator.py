@@ -6,8 +6,8 @@ import networkx as  nx
 import spreadingModel as model
 import sys
 
-def simModel(model_name, net, output):
-	m = model.Models(net.getNodes())
+def simModel(model_name, net, output, b, d, g, e, th, ti):
+	m = model.Models(net.getNodes(), b, d, g, e, th, ti)
 
 	# call the funciton passed as a string
 	getattr(m, model_name)()
@@ -51,7 +51,7 @@ def main():
 	net = network.Network()
 	net.createNetwork(filename)
 	net.createNodes(net.getGraph())
-	simModel("SISmodel", net, output)
-	simModel('SIRmodel', net, output)
+	simModel("SISmodel", net, output, 0.3, 0.3, 0.1, 0.3, 0.1, 1000)
+	simModel('SIRmodel', net, output, 0.3, 0.3, 0.1, 0.3, 0.1, 1000)
 if __name__ == '__main__':
 	main()

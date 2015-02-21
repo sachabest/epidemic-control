@@ -51,7 +51,6 @@ class Models():
 							success = node.flipCoin(self.beta, 'INFECTED')
 							#stop looping through the neighbors if the node we're looking at is infected
 							if success:
-								node.setState('INFECTED')
 								break
 				elif node.getState() == 'INFECTED':
 					node.flipCoin(self.delta, 'SUSCEPTIBLE')
