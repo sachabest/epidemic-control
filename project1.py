@@ -87,7 +87,8 @@ def bfs(graph, size):
 	i = int(random.randrange(node_count))
 	while len(edges) < size:
 
-		edges.extend(nx.bfs_edges(graph, nx.nodes(graph)[i], False))
+		#edges.extend(nx.bfs_edges(graph, nx.nodes(graph)[i], False))
+		edges.extend(performBFS(graph, nx.nodes(graph)[i]))
 		print 'edges after one bfs: ' + str(len(edges))
 		nodes_searched.add(i)
 		# generate new random number
@@ -104,6 +105,27 @@ def bfs(graph, size):
 			return newGraph
 	print 'did not generate enough nodes from connected components. Try a higher connectivity ratio'
 	exit()
+
+def performBFS(g, node):
+	nodeCount = 0
+	q = Queue()
+	s = set()
+	g1 = nx.Graph()
+	g1.add_node(node)
+	q.enqueue(node)
+	s.add(node)
+	while (q.empty == False && nodeCount < 1000):
+		n = q.dequeue()
+		for neighbor in g.neighbors(n):
+			if nodeCount >= 1000:
+				break;
+			if neighbor not in s:
+				q.enqueue(neighbor)
+				s.add(neighbor)
+				g1.add_node(neighbor)
+				g1.add_edge(n, neighbor)
+				nodeCount = nodeCount + 1
+	return g1
 
 # main method
 def main():
