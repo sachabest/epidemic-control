@@ -108,19 +108,19 @@ def bfs(graph, size):
 
 def performBFS(g, node):
 	nodeCount = 0
-	q = Queue()
+	q = Queue.LifoQueue()
 	s = set()
 	g1 = nx.Graph()
 	g1.add_node(node)
-	q.enqueue(node)
+	q.put(node)
 	s.add(node)
-	while (q.empty == False and nodeCount < 1000):
-		n = q.dequeue()
+	while (not q.empty() and nodeCount < 1000):
+		n = q.get()
 		for neighbor in g.neighbors(n):
 			if nodeCount >= 1000:
 				break;
 			if neighbor not in s:
-				q.enqueue(neighbor)
+				q.put(neighbor)
 				s.add(neighbor)
 				g1.add_node(neighbor)
 				g1.add_edge(n, neighbor)
