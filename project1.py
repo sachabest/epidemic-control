@@ -114,7 +114,7 @@ def performBFS(g, node):
 	g1.add_node(node)
 	q.enqueue(node)
 	s.add(node)
-	while (q.empty == False && nodeCount < 1000):
+	while (q.empty == False and nodeCount < 1000):
 		n = q.dequeue()
 		for neighbor in g.neighbors(n):
 			if nodeCount >= 1000:
