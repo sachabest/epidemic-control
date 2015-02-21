@@ -19,15 +19,18 @@ class Network():
     def createNodes(self, g):
         nodes = dict()
         for n in g:
-            node_n = node.Node(n)
+            if n in nodes:
+                node_n = nodes[n]
+            else:
+                node_n = node.Node(n)
+                nodes[n] = node_n
             for n2 in g.neighbors(n):
-                # vincent - you needed to make this into another node object
-                # otherwise its just a str
-                # node_n.addNeighbor(n2)
-                node_n2 = node.Node(n2)
+                if n2 in nodes:
+                    node_n2 = nodes[n2]
+                else:
+                    node_n2 = node.Node(n2)
+                    nodes[n2] = node_n2
                 node_n.addNeighbor(node_n2)
-                node_n2.addNeighbor(node_n)
-            nodes[node_n] = n
         self.theNodes = nodes
 
     def getGraph(self):
