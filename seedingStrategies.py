@@ -2,6 +2,7 @@ import node
 import network
 import networkx as nx
 from operator import itemgetter
+#from numpy.linalg import eig
 
 class SeedingStrategy:
 
@@ -28,12 +29,19 @@ class SeedingStrategy:
 		return self.nodes
 
 	def eigenvectorCentrality(self):
-		sortedListByEigenvectorCentrality = sorted(nx.eigenvector_centrality(self.net, max_iter = 10000, tol = .1), key = itemgetter(1), reverse = True)
+		#eigenvector_cent = nx.eigenvector_centrality(self.net, max_iter = 100, tol = .0005)
+		#sortedListByEigenvectorCentrality = [(e, n) for n, e in eigenvector_cent.iteritems()]
+		#sortedListByEigenvectorCentrality.sort()
+		#sortedListByEigenvectorCentrality
+		#sortedListByEigenvectorCentrality = sorted(nx.eigenvector_centrality(self.net, max_iter = 100, tol = .0005), key = itemgetter(1), reverse = False)
+		#net_matrix = adj_matrix(self.net)
+		eigenvectorCentralityDictionary = nx.eigenvector_centrality_numpy(self.net)
+		sortedListByEigenvectorCentrality = sorted([(node, eigenvectorCentralityDictionary[node]) for node in eigenvectorCentralityDictionary], key = itemgetter(1), reverse = True)
 		i = self.numberNodes
 		while (i > 0):
 			for node in self.nodes:
 				if (self.nodes[node].getId() == sortedListByEigenvectorCentrality[0][0]):
-					success = self.nodes[node].setState = 'INFECTED'
+					success = self.nodes[node].setState('INFECTED')
 					if success:
 						sortedListByEigenvectorCentrality.pop(0)
 						break
