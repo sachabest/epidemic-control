@@ -40,3 +40,6 @@ class Node:
 
 	def getThis(self):
 		return self
+
+	def getId(self):
+		return self.id
