@@ -5,6 +5,8 @@ import network
 import networkx as  nx
 import spreadingModel as model
 import sys
+import seedingStrategies
+from operator import itemgetter
 
 def simModel(model_name, net, output, b, d, g, e, th, ti):
 	m = model.Models(net.getNodes(), b, d, g, e, th, ti)
@@ -32,8 +34,8 @@ def simModel(model_name, net, output, b, d, g, e, th, ti):
 			vigilant_ratio += 1.0 / total_nodes
 		elif node.getState() == 'EXPOSED':
 			exposed_ratio += 1.0 / total_nodes
-
-	f.write(nodestr)
+		#f.write(nodestr)
+	
 	print model_name + '\n'
 	print 'infected ratio: ' + str(infect_ratio)
 	print 'susceptible ratio: ' + str(suscept_ratio)
@@ -51,7 +53,10 @@ def main():
 	net = network.Network()
 	net.createNetwork(filename)
 	net.createNodes(net.getGraph())
-	simModel("SISmodel", net, output, 0.3, 0.3, 0.1, 0.3, 0.1, 1000)
-	simModel('SIRmodel', net, output, 0.3, 0.3, 0.1, 0.3, 0.1, 1000)
+	sortedListByDegrees = sorted(net.getGraph().degree_iter(), key = itemgetter(1), reverse = True)
+	theSeedingStrategy = seedingStrategies.SeedingStrategy(net.getGraph(), 1, net)
+	net.updateNodes(theSeedingStrategy.eigenvectorCentrality())
+	simModel("SISmodel", net, output, 0.1, 0.3, 0.1, 0.3, 0.1, 1000)
+	simModel('SIRmodel', net, output, 0.1, 0.3, 0.1, 0.3, 0.1, 1000)
 if __name__ == '__main__':
 	main()
