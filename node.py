@@ -8,6 +8,7 @@ class Node:
 		self.possible_states = ['SUSCEPTIBLE', 'INFECTED', 'VIGILANT', 'RECOVERED', 'EXPOSED']
 		self.state = 'SUSCEPTIBLE'
 		self.neighbors = list()
+		self.core_number = 0
 
 	def flipCoin(self, prob, potentialState):
 		#takes in a probability and a potential state that it could change to
@@ -43,3 +44,9 @@ class Node:
 
 	def getId(self):
 		return self.id
+
+	def getCoreNumber(self):
+		return self.core_number
+
+	def setCoreNumber(self, i):
+		self.core_number = i
