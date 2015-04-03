@@ -42,6 +42,9 @@ class Node:
 	def getThis(self):
 		return self
 
+	def getId(self):
+		return self.id
+
 	def getCoreNumber(self):
 		return self.core_number
 

@@ -38,3 +38,6 @@ class Network():
 
     def getNodes(self):
         return self.theNodes
+
+    def updateNodes(self, nodes):
+        self.theNodes = nodes
