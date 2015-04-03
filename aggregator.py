@@ -54,8 +54,8 @@ def main():
 	net.createNetwork(filename)
 	net.createNodes(net.getGraph())
 	sortedListByDegrees = sorted(net.getGraph().degree_iter(), key = itemgetter(1), reverse = True)
-	theSeedingStrategy = seedingStrategies.SeedingStrategy(net.getGraph(), 1, net)
-	net.updateNodes(theSeedingStrategy.eigenvectorCentrality())
+	theSeedingStrategy = seedingStrategies.SeedingStrategy(net.getGraph(), 5, net)
+	net.updateNodes(theSeedingStrategy.kCoreDecomposition())
 	simModel("SISmodel", net, output, 0.1, 0.3, 0.1, 0.3, 0.1, 1000)
 	simModel('SIRmodel', net, output, 0.1, 0.3, 0.1, 0.3, 0.1, 1000)
 if __name__ == '__main__':

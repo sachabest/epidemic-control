@@ -42,10 +42,12 @@ class SeedingStrategy:
 
 	def kCoreDecomposition(self):
 		i = self.numberNodes
+		# initialize all nodes to a k core number of 1
 		for node in self.nodes:
-			node.setCoreNumber(1)
+			self.nodes[node].setCoreNumber(1)
 		nodes_remaining = nx.k_core(self.net, 2)
 		coreNumber = 2
+		# keep removing nodes with k_core until the graph is empty
 		while (len(nodes_remaining) > 0):
 			for node in nodes_remaining:
 				currNode = self.nodes[node]
@@ -53,22 +55,25 @@ class SeedingStrategy:
 			coreNumber += 1
 			nodes_remaining = nx.k_core(self.net, coreNumber)
 
+		# create a dict that maps an int to a list of all nodes with int=kCoreNumber
 		layers = dict()
 		for node in self.nodes:
-			key = node.getCoreNumber()
+			key = self.nodes[node].getCoreNumber()
 			if key in layers:
 				layers[key].append(node)
 			else:
 				layers[key] = [node]
 
+		# start at the most central layer and choose one node from each layer
+		# as we move farther from the core (which would be closer to the periphery)
 		sorted_layers = sorted(layers.keys(), reverse=True)
 		for l in sorted_layers:
 			if i == 0:
 				break
 			currNode = layers[l][0]
-			success = currNode.setState('INFECTED')
+			success = self.nodes[currNode].setState('INFECTED')
 			i -= 1
-			
+
 		return self.nodes
 
 	def cascadingSize(self):
