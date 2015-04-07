@@ -34,7 +34,7 @@ def simModel(model_name, net, output, b, d, g, e, th, ti):
 			vigilant_ratio += 1.0 / total_nodes
 		elif node.getState() == 'EXPOSED':
 			exposed_ratio += 1.0 / total_nodes
-		#f.write(nodestr)
+		f.write(nodestr)
 	
 	print model_name + '\n'
 	print 'infected ratio: ' + str(infect_ratio)
@@ -42,6 +42,12 @@ def simModel(model_name, net, output, b, d, g, e, th, ti):
 	print 'exposed ratio: ' + str(exposed_ratio)
 	print 'vigilant ratio: ' + str(vigilant_ratio)
 	print 'recovered ratio: ' + str(recovered_ratio) + '\n'
+	f.write('\n')
+	f.write('infected ratio: ' + str(infect_ratio) + '\n')
+	f.write('susceptible ratio: ' + str(suscept_ratio) + '\n')
+	f.write('exposed ratio: ' + str(exposed_ratio) + '\n')
+	f.write('vigilant ratio: ' + str(vigilant_ratio) + '\n')
+	f.write('recovered ratio: ' + str(recovered_ratio) + '\n')
 
 	f.close()
 
@@ -53,8 +59,7 @@ def main():
 	net = network.Network()
 	net.createNetwork(filename)
 	net.createNodes(net.getGraph())
-	sortedListByDegrees = sorted(net.getGraph().degree_iter(), key = itemgetter(1), reverse = True)
-	theSeedingStrategy = seedingStrategies.SeedingStrategy(net.getGraph(), 5, net)
+	theSeedingStrategy = seedingStrategies.SeedingStrategy(net.getGraph(), 1, net)
 	net.updateNodes(theSeedingStrategy.kCoreDecomposition())
 	simModel("SISmodel", net, output, 0.1, 0.3, 0.1, 0.3, 0.1, 1000)
 	simModel('SIRmodel', net, output, 0.1, 0.3, 0.1, 0.3, 0.1, 1000)
