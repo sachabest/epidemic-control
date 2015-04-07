@@ -19,6 +19,8 @@ for each time step:
 			flipCoin on delta with potentialState='SUSCEPTIBLE'
 '''
 
+import csv
+
 class Models():
 	def __init__(self, nodes):
 		
@@ -41,19 +43,25 @@ class Models():
 		self.time = ti
 
 	def SISmodel(self):
-		for i in xrange(self.time):
-			#each of these nodes should be of type Node class in node.py
-			for node in self.nodes:
-				if node.getState() == 'SUSCEPTIBLE':
-					#print 'changing neighbors of' + str(node.id)
-					for neighbor in node.getNeighbors():
-						if neighbor.getState() == 'INFECTED':
-							success = node.flipCoin(self.beta, 'INFECTED')
-							#stop looping through the neighbors if the node we're looking at is infected
-							if success:
-								break
-				elif node.getState() == 'INFECTED':
-					node.flipCoin(self.delta, 'SUSCEPTIBLE')
+		with open('states.txt','wb') as csvfile:
+			statewriter = csv.writer(csvfile, delimiter=',')
+			for i in xrange(self.time):
+				#each of these nodes should be of type Node class in node.py
+				for node in self.nodes:
+					if node.getState() == 'SUSCEPTIBLE':
+						#print 'changing neighbors of' + str(node.id)
+						for neighbor in node.getNeighbors():
+							if neighbor.getState() == 'INFECTED':
+								success = node.flipCoin(self.beta, 'INFECTED')
+								#stop looping through the neighbors if the node we're looking at is infected
+								if success:
+									break
+					elif node.getState() == 'INFECTED':
+						node.flipCoin(self.delta, 'SUSCEPTIBLE')
+					statewriter.writerow([node.getId(), node.getState(), i])
+
+
+
 
 	'''
 	SIR Model
