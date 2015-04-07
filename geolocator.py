@@ -19,6 +19,7 @@ def init(input_file):
 					node_map[long(splitted[0])] = node
 				except ValueError:
 					print("Couldn't parse: " + line);
+	print("Geolocated " + str(len(node_map)) + " nodes in database.");
 
 def main():
 	if len(sys.argv) < 3:	
