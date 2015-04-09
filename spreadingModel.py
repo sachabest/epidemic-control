@@ -43,8 +43,9 @@ class Models():
 		self.time = ti
 
 	def SISmodel(self):
-		with open('states.txt','wb') as csvfile:
+		with open('states.csv','wb') as csvfile:
 			statewriter = csv.writer(csvfile, delimiter=',')
+			statewriter.writerow(['id', 'state', 'time'])
 			for i in xrange(self.time):
 				#each of these nodes should be of type Node class in node.py
 				for node in self.nodes:
