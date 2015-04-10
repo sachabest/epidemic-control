@@ -62,7 +62,10 @@ class Models():
 					# sample: [1.0, 2.0,a]; 
 					# downsampled to 20%
 					if i % 5 == 0:
-						dynamic_string = '[' + str(i) + ', ' + str(i+1) + ', ' + node.getState() + ']';
+						state_int = 0;
+						if node.getState() == 'INFECTED':
+							state_int = 1;
+						dynamic_string = '[' + str(i) + ', ' + str(i+1) + ', ' +  str(state_int) + ']';
 						if node.getId() in node_dynamic_map:
 							node_dynamic_map[node.getId()].append(dynamic_string);
 						else:
