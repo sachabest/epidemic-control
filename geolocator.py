@@ -45,7 +45,7 @@ def create_edge_filter(edge_list, output_file):
 			writer.writerow([node, full_node['lat'], full_node['lon'], full_node['pop'], full_node['cap']])
 
 def main():
-	if len(sys.argv) < 3:	
+	if len(sys.argv) < 4:	
 		print 'USAGE: geolocator.py source_data edge_list output_file'
 	filename = sys.argv[1]
 	edge_list = sys.argv[2]
