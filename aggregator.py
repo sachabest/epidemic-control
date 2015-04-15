@@ -14,7 +14,7 @@ def simModel(model_name, net, output, b, d, g, e, th, ti):
 	# call the funciton passed as a string
 	getattr(m, model_name)()
 
-	f = open(output + '_' + model_name, 'w')
+	f = open(output + '_' + model_name + '.txt', 'w')
 	suscept_ratio = 0
 	infect_ratio = 0
 	vigilant_ratio = 0

@@ -19,6 +19,8 @@ for each time step:
 			flipCoin on delta with potentialState='SUSCEPTIBLE'
 '''
 
+import csv
+
 class Models():
 	def __init__(self, nodes):
 		
@@ -41,19 +43,44 @@ class Models():
 		self.time = ti
 
 	def SISmodel(self):
-		for i in xrange(self.time):
-			#each of these nodes should be of type Node class in node.py
-			for node in self.nodes:
-				if node.getState() == 'SUSCEPTIBLE':
-					#print 'changing neighbors of' + str(node.id)
-					for neighbor in node.getNeighbors():
-						if neighbor.getState() == 'INFECTED':
-							success = node.flipCoin(self.beta, 'INFECTED')
-							#stop looping through the neighbors if the node we're looking at is infected
-							if success:
-								break
-				elif node.getState() == 'INFECTED':
-					node.flipCoin(self.delta, 'SUSCEPTIBLE')
+		node_dynamic_map = dict()
+		with open('states.csv','wb') as csvfile:
+			# downsampled to 20%
+			for i in xrange(self.time):
+				#each of these nodes should be of type Node class in node.py
+				for node in self.nodes:
+					if node.getState() == 'SUSCEPTIBLE':
+						#print 'changing neighbors of' + str(node.id)
+						for neighbor in node.getNeighbors():
+							if neighbor.getState() == 'INFECTED':
+								success = node.flipCoin(self.beta, 'INFECTED')
+								#stop looping through the neighbors if the node we're looking at is infected
+								if success:
+									break
+					elif node.getState() == 'INFECTED':
+						node.flipCoin(self.delta, 'SUSCEPTIBLE')
+					# sample: [1.0, 2.0,a]; 
+					# downsampled to 20%
+					if i % 5 == 0:
+						state_int = 0;
+						if node.getState() == 'INFECTED':
+							state_int = 1;
+						dynamic_string = '[' + str(i) + ', ' + str(i+1) + ', ' +  str(state_int) + ']';
+						if node.getId() in node_dynamic_map:
+							node_dynamic_map[node.getId()].append(dynamic_string);
+						else:
+							node_dynamic_map[node.getId()] = [dynamic_string];
+			fields = ['Id', "State"];
+			csvwriter = csv.DictWriter(csvfile, fieldnames=fields)
+			for nodeKey in node_dynamic_map:
+				textInner = '<'
+				for timestep in node_dynamic_map[nodeKey]: 
+					textInner += timestep
+					textInner += '; '
+				textInner = textInner[:len(textInner) - 2]
+				textInner += '>'
+				csvwriter.writerow({'Id': nodeKey, 'State': textInner})
+
 
 	'''
 	SIR Model

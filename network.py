@@ -13,7 +13,8 @@ class Network():
         f = open(filename, 'r')
         for line in f:
             l = line.split(' ')
-            g.add_edge(l[0], l[1])
+            if (len(l) > 1):
+                g.add_edge(l[0], l[1])
         self.graph = g
 
     def createNodes(self, g):
