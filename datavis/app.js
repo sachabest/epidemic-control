@@ -8,6 +8,18 @@ app.get('/', function (req, res) {
 	res.render("index");
 });
 
+app.get('main.js', function (req, res) {
+	res.sendFile('main.js');
+});
+
+app.get('vis.js', function (req, res0 ){
+	res.sendFile('node_modules/vis/dist/vis.min.js');
+});
+
+app.get('vis.css', function (req, res0 ){
+	res.sendFile('node_modules/vis/dist/vis.min.css');
+});
+
 var server = app.listen(80, function () {
 
 	var host = server.address().address;
