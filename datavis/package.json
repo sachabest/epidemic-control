@@ -2,7 +2,7 @@
   "name": "datavis",
   "version": "1.0.0",
   "description": "NETS 312 Graph Visualization",
-  "main": "main.js",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
