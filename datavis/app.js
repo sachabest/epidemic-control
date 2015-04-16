@@ -1,4 +1,5 @@
 var express = require('express');
+var vis = require('vis');
 var app = express();
 
 app.set('view engine', 'jade');
