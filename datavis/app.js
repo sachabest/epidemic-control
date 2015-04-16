@@ -9,15 +9,15 @@ app.get('/', function (req, res) {
 });
 
 app.get('/main.js', function (req, res) {
-	res.sendFile('main.js');
+	res.sendFile('main.js', {root: '.'});
 });
 
-app.get('/vis.js', function (req, res0 ){
-	res.sendFile('node_modules/vis/dist/vis.min.js');
+app.get('/vis.js', function (req, res ){
+	res.sendFile('node_modules/vis/dist/vis.min.js', {root: '.'});
 });
 
-app.get('/vis.css', function (req, res0 ){
-	res.sendFile('node_modules/vis/dist/vis.min.css');
+app.get('/vis.css', function (req, res ){
+	res.sendFile('node_modules/vis/dist/vis.min.css', {root: '.'});
 });
 
 var server = app.listen(80, function () {
