@@ -62,14 +62,14 @@ class Models():
 					# sample: [1.0, 2.0,a]; 
 					# downsampled to 20%
 					if i % 5 == 0:
-						state_int = 0;
+						state_int = 0
 						if node.getState() == 'INFECTED':
-							state_int = 1;
+							state_int = 1
 						dynamic_string = '[' + str(i) + ', ' + str(i+1) + ', ' +  str(state_int) + ']';
 						if node.getId() in node_dynamic_map:
-							node_dynamic_map[node.getId()].append(dynamic_string);
+							node_dynamic_map[node.getId()].append(dynamic_string)
 						else:
-							node_dynamic_map[node.getId()] = [dynamic_string];
+							node_dynamic_map[node.getId()] = [dynamic_string]
 			fields = ['Id', "State"];
 			csvwriter = csv.DictWriter(csvfile, fieldnames=fields)
 			for nodeKey in node_dynamic_map:
@@ -109,6 +109,7 @@ class Models():
 				elif node.getState() == 'INFECTED':
 					node.flipCoin(self.delta, 'RECOVERED')
 
+
 	'''
 	SIRS Model
 	for each time step:
@@ -124,20 +125,46 @@ class Models():
 				flipCoin on gamma with potentialState='SUSCEPTIBLE'
 	'''
 
+	#closest to ebola
 	def SIRSmodel(self):
-		for i in xrange(self.time):
-			for node in self.nodes:
-				if node.getState() == 'SUSCEPTIBLE':
-					for neighbor in node.getNeighbors():
-						if neighbor.getState() == 'INFECTED':
-							success = node.flipCoin(self.beta, 'INFECTED')
-							#stop looping through the neighbors if the node we're looking at is infected
-							if success:
-								break
-				elif node.getState() == 'INFECTED':
-					node.flipCoin(self.delta, 'RECOVERED')
-				elif node.getState() == 'RECOVERED':
-					node.flipCoin(self.gamma, 'SUSCEPTIBLE')
+		node_dynamic_map = dict()
+		with open('states.csv','wb') as csvfile:
+			for i in xrange(self.time):
+				for node in self.nodes:
+					if node.getState() == 'SUSCEPTIBLE':
+						for neighbor in node.getNeighbors():
+							if neighbor.getState() == 'INFECTED':
+								success = node.flipCoin(self.beta, 'INFECTED')
+								#stop looping through the neighbors if the node we're looking at is infected
+								if success:
+									break
+					elif node.getState() == 'INFECTED':
+						node.flipCoin(self.delta, 'RECOVERED')
+					elif node.getState() == 'RECOVERED':
+						node.flipCoin(self.gamma, 'SUSCEPTIBLE')
+					# sample: [1.0, 2.0,a]; 
+					# downsampled to 20%
+					if i % 5 == 0:
+						state_int = 0;
+						if node.getState() == 'INFECTED':
+							state_int = 1
+						elif node.getState() == 'RECOVERED':
+							state_int = 2
+						dynamic_string = '[' + str(i) + ', ' + str(i+1) + ', ' +  str(state_int) + ']';
+						if node.getId() in node_dynamic_map:
+							node_dynamic_map[node.getId()].append(dynamic_string)
+						else:
+							node_dynamic_map[node.getId()] = [dynamic_string]
+			fields = ['Id', "State"];
+			csvwriter = csv.DictWriter(csvfile, fieldnames=fields)
+			for nodeKey in node_dynamic_map:
+				textInner = '<'
+				for timestep in node_dynamic_map[nodeKey]: 
+					textInner += timestep
+					textInner += '; '
+				textInner = textInner[:len(textInner) - 2]
+				textInner += '>'
+				csvwriter.writerow({'Id': nodeKey, 'State': textInner})
 
 	'''
 	SIV Model

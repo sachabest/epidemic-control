@@ -1,0 +1,16 @@
+{
+  "name": "datavis",
+  "version": "1.0.0",
+  "description": "NETS 312 Graph Visualization",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Sacha Best",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.12.3",
+    "jade": "^1.9.2",
+    "vis": "^3.12.0"
+  }
+}
