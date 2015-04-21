@@ -12,15 +12,27 @@ app.get('/main.js', function (req, res) {
 	res.sendFile('main.js', {root: '.'});
 });
 
+app.get('/main.css', function (req, res) {
+	res.sendFile('main.css', {root: '.'});
+});
+
 app.get('/vis.js', function (req, res ){
-	res.sendFile('node_modules/vis/dist/vis.min.js', {root: '.'});
+	res.sendFile('node_modules/vis/dist/vis.js', {root: '.'});
 });
 
 app.get('/vis.css', function (req, res ){
-	res.sendFile('node_modules/vis/dist/vis.min.css', {root: '.'});
+	res.sendFile('node_modules/vis/dist/vis.css', {root: '.'});
 });
 
-var server = app.listen(80, function () {
+app.get('/vis.map', function (req, res ){
+	res.sendFile('node_modules/vis/dist/vis.map', {root: '.'});
+});
+
+app.get('/gephi.json', function (req, res ){
+	res.sendFile('gephi.json', {root: '.'});
+});
+
+var server = app.listen(8080, function () {
 
 	var host = server.address().address;
 	var port = server.address().port;
