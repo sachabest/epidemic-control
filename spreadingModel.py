@@ -20,6 +20,7 @@ for each time step:
 '''
 
 import csv
+import json
 
 class Models():
 	def __init__(self, nodes):
@@ -150,21 +151,12 @@ class Models():
 							state_int = 1
 						elif node.getState() == 'RECOVERED':
 							state_int = 2
-						dynamic_string = '[' + str(i) + ', ' + str(i+1) + ', ' +  str(state_int) + ']';
 						if node.getId() in node_dynamic_map:
-							node_dynamic_map[node.getId()].append(dynamic_string)
+							node_dynamic_map[node.getId()].append(state_int)
 						else:
-							node_dynamic_map[node.getId()] = [dynamic_string]
-			fields = ['Id', "State"];
-			csvwriter = csv.DictWriter(csvfile, fieldnames=fields)
-			for nodeKey in node_dynamic_map:
-				textInner = '<'
-				for timestep in node_dynamic_map[nodeKey]: 
-					textInner += timestep
-					textInner += '; '
-				textInner = textInner[:len(textInner) - 2]
-				textInner += '>'
-				csvwriter.writerow({'Id': nodeKey, 'State': textInner})
+							node_dynamic_map[node.getId()] = [state_int]
+		json_str = json.dumps(node_dynamic_map);
+		with open('states.json') as outfile: outfile.write(json_str);
 
 	'''
 	SIV Model

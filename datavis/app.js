@@ -4,6 +4,8 @@ var app = express();
 
 app.set('view engine', 'jade');
 
+app.use(express.static('sigma'));
+
 app.get('/', function (req, res) {
 	res.render("index");
 });
@@ -28,8 +30,8 @@ app.get('/vis.map', function (req, res ){
 	res.sendFile('node_modules/vis/dist/vis.map', {root: '.'});
 });
 
-app.get('/gephi.json', function (req, res ){
-	res.sendFile('gephi.json', {root: '.'});
+app.get('/sample.gexf', function (req, res ){
+	res.sendFile('sample.gexf', {root: '.'});
 });
 
 var server = app.listen(8080, function () {
