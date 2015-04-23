@@ -1,6 +1,7 @@
 import node
 import network
 import networkx as nx
+import copy
 from operator import itemgetter
 #from numpy.linalg import eig
 
@@ -10,10 +11,11 @@ class SeedingStrategy:
 	# self.net = net.getGraph() -- networkX
 	# self.numberNodes = number of seed nodes
 	# self.nodes = net.getNodes() -- our own node class
-	def __init__(self, net, numberNodes, nodes):
+	def __init__(self, net, numberNodes, nodes, beta):
 		self.net = net
 		self.numberNodes = numberNodes
 		self.nodes = nodes.getNodes()
+		self.beta = beta
 
 	def largestDegrees(self):
 		sortedListByDegrees = sorted(self.net.degree_iter(), key = itemgetter(1), reverse = True)
@@ -29,12 +31,6 @@ class SeedingStrategy:
 		return self.nodes
 
 	def eigenvectorCentrality(self):
-		#eigenvector_cent = nx.eigenvector_centrality(self.net, max_iter = 100, tol = .0005)
-		#sortedListByEigenvectorCentrality = [(e, n) for n, e in eigenvector_cent.iteritems()]
-		#sortedListByEigenvectorCentrality.sort()
-		#sortedListByEigenvectorCentrality
-		#sortedListByEigenvectorCentrality = sorted(nx.eigenvector_centrality(self.net, max_iter = 100, tol = .0005), key = itemgetter(1), reverse = False)
-		#net_matrix = adj_matrix(self.net)
 		eigenvectorCentralityDictionary = nx.eigenvector_centrality_numpy(self.net)
 		sortedListByEigenvectorCentrality = sorted([(node, eigenvectorCentralityDictionary[node]) for node in eigenvectorCentralityDictionary], key = itemgetter(1), reverse = True)
 		i = self.numberNodes
@@ -85,8 +81,96 @@ class SeedingStrategy:
 		return self.nodes
 
 	def cascadingSize(self):
+		def findCascade(theInfectedNodesNotYetFlipped):
+			numberInfectedNodes = 0
+			while (len(theInfectedNodesNotYetFlipped) > 0):
+				for node in theInfectedNodesNotYetFlipped:
+					theInfectedNodesNotYetFlipped.remove(node)
+					for neighbor in node.getNeighbors():
+						if neighbor.getState() == 'SUSCEPTIBLE':
+							success = neighbor.flipCoin(self.beta, 'INFECTED')
+							if success:
+								theInfectedNodesNotYetFlipped.append(neighbor)
+								numberInfectedNodes += 1
+			return numberInfectedNodes
+
+		def reset():
+			#print("resetting")
+			for node in self.nodes:
+				if self.nodes[node] not in startingInfectedNodes:
+					self.nodes[node].setState('SUSCEPTIBLE')
+				else:
+					self.nodes[node].setState('INFECTED')
+					#infectedNodesNotYetFlipped.append(self.nodes[node])
+			#infectedNodesNotYetFlipped = startingInfectedNodes
+			#print ("Not yet flipped:")
+			#print (infectedNodesNotYetFlipped)
+			#print ("^")
+
+		def find_n_cascades(n, theInfectedNodesNotYetFlipped):
+			totalNumberInfectedNodes = 0
+			i = n
+			while i > 0:
+				totalNumberInfectedNodes += findCascade(theInfectedNodesNotYetFlipped)
+				reset()
+				i -= 1
+			averageNumberInfectedNodes = totalNumberInfectedNodes / n
+			return averageNumberInfectedNodes
+
 		i = self.numberNodes
-		while (i > 0):
-			
-			i -= 1
+		self.largestDegrees()
+		infectedNodesNotYetFlipped = []
+		startingInfectedNodes = []
+		for node in self.nodes:
+			if self.nodes[node].getState() == 'INFECTED':
+				infectedNodesNotYetFlipped.append(self.nodes[node])
+				startingInfectedNodes.append(self.nodes[node])
+		infectedNodesNotYetFlippedCopy = copy.copy(infectedNodesNotYetFlipped)
+		averageNumberInfectedNodes = find_n_cascades(20, infectedNodesNotYetFlippedCopy)
+		newlyAddedStartingInfectedNodes = copy.copy(startingInfectedNodes)
+		while (len(newlyAddedStartingInfectedNodes) > 0):
+			print ("iteration")
+			for node in newlyAddedStartingInfectedNodes:
+				print ("next iteration")
+				print (newlyAddedStartingInfectedNodes)
+				print (infectedNodesNotYetFlipped)
+				print (startingInfectedNodes)
+				node.setState('SUSCEPTIBLE')
+				newlyAddedStartingInfectedNodes.remove(node)
+				infectedNodesNotYetFlipped.remove(node)
+				startingInfectedNodes.remove(node)
+				maxAverageNumberInfectedNodesAmongNeighbors = -1
+				maxNeighborNode = node
+				for neighbor in node.getNeighbors():
+					neighbor.setState('INFECTED')
+					infectedNodesNotYetFlipped.append(neighbor)
+					startingInfectedNodes.append(neighbor)
+					infectedNodesNotYetFlippedCopy = copy.copy(infectedNodesNotYetFlipped)
+					averageNumberInfectedNodesForNeighbor = find_n_cascades(20, infectedNodesNotYetFlippedCopy)
+					startingInfectedNodes.remove(neighbor)
+					infectedNodesNotYetFlipped.remove(neighbor)
+					if averageNumberInfectedNodesForNeighbor > maxAverageNumberInfectedNodesAmongNeighbors:
+						maxAverageNumberInfectedNodesAmongNeighbors = averageNumberInfectedNodesForNeighbor
+						maxNeighborNode = neighbor
+				if maxAverageNumberInfectedNodesAmongNeighbors > averageNumberInfectedNodes:
+					startingInfectedNodes.append(maxNeighborNode)
+					newlyAddedStartingInfectedNodes.append(maxNeighborNode)
+					infectedNodesNotYetFlipped.append(maxNeighborNode)
+				else:
+					startingInfectedNodes.append(node)
+		print ("Before Reset:")
+		for node in self.nodes:
+			if self.nodes[node].getState() == 'INFECTED':
+					print ("new infected node:")
+					print (node)
+					print (self.nodes[node])
+		reset()
+		print ("After reset:")
+		print ("Starting Infected Nodes:")
+		print (startingInfectedNodes)
+		for node in self.nodes:
+			if self.nodes[node].getState() == 'INFECTED':
+				print ("new infected node:")
+				print (node)
+				print (self.nodes[node])
 		return self.nodes
