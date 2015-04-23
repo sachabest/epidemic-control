@@ -6,30 +6,36 @@ $(document).ready(function() {
 	var graph;
 	sigma.parsers.gexf('sample.gexf', { container: 'sigma'}, function(s) {
 		graph = s.graph;
-		console.log(graph);
 
 		$('#timestep').change(function () {
 			var time = $(this).val();
-			console.log(time);
 			for (var node = 1; node < graph.nodes().length; node++) {
 				var nodeprop = graph.nodes()[node];
 				var id = nodeprop.id;
 				nodeprop.color = colors[timesteps[id][time]];
+				nodeprop.size = 1.5;
 				nodeprop.originalColor = colors[timesteps[id][time]];;
 			}
 			s.refresh();
 		});
 
+		var i = 1;                  	//  set your counter to 1
+		function play () {        	//  create a loop function
+	  		setTimeout(function () {    //  call a 3s setTimeout when the loop is called
+				$('#timestep').val(i);
+				$('#timestep').change();
+				i++;                    //  increment the counter
+	      		if (i < 200) {           //  if the counter < 10, call the loop function
+	         		play();           //  ..  again which will trigger another 
+	      		}                       //  ..  setTimeout()
+	   		}, 200)
+		} 
+
 		$('#play').click(function () {
-			for (var i = 1; i < 1000; i++) {
-				setTimeout( function() {
-					for (var node = 1; node < graph.nodes().length; node++) {
-						var nodeprop = graph.nodes()[node];
-						var id = nodeprop.id;
-						nodeprop.color = colors[timesteps[id][i]];
-					}
-				}, 250);
-			}
+			console.log('click');
+			i = 1;
+			play();
+			$('#play').text(playing);
 		});
 	});
 	var xmlhttp = new XMLHttpRequest();
@@ -38,6 +44,8 @@ $(document).ready(function() {
 	        timesteps = JSON.parse(xmlhttp.responseText);
 	        console.log('json back');
 			$('#play').prop('disabled', false);
+			$('#timestep').change();
+
 	   	}	
 	};
 	xmlhttp.open("GET", 'states.json', true);
