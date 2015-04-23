@@ -38,7 +38,7 @@ app.get('/states.json', function (req, res) {
 	res.sendFile('states.json', {root: '.'});
 });
 
-var server = app.listen(8080, function () {
+var server = app.listen(80, function () {
 
 	var host = server.address().address;
 	var port = server.address().port;
