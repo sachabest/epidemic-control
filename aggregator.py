@@ -59,9 +59,9 @@ def main():
 	net = network.Network()
 	net.createNetwork(filename)
 	net.createNodes(net.getGraph())
-	theSeedingStrategy = seedingStrategies.SeedingStrategy(net.getGraph(), 20, net)
+	theSeedingStrategy = seedingStrategies.SeedingStrategy(net.getGraph(), 20, net, 0.7)
 	net.updateNodes(theSeedingStrategy.kCoreDecomposition())
 	#simModel("SISmodel", net, output, 0.1, 0.3, 0.1, 0.3, 0.1, 1000)
-	simModel('SIRSmodel', net, output, 0.7, 0.1, 0.05, 0.3, 0.1, 1000)
+	simModel('SIRSmodel', net, output, 0.7, 0.001, 0.01, 0.3, 0.1, 1000)
 if __name__ == '__main__':
 	main()
