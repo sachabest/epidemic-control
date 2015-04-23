@@ -10,6 +10,10 @@ app.get('/', function (req, res) {
 	res.render("index");
 });
 
+app.get('/back.png', function (req, res) {
+	res.sendFile('back.png', {root: '.'});
+});
+
 app.get('/main.js', function (req, res) {
 	res.sendFile('main.js', {root: '.'});
 });
