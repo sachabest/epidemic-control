@@ -1,0 +1,15 @@
+.navbar {
+	margin-bottom: 0px;
+}
+.side-menu {
+	padding: 10px 10px 10px 10px;
+	margin: 10px 10px 10px 10px;
+}
+.black {
+	background-color: #000000;
+	height: 100%;
+}
+.description {
+	color: #FFFFFF;
+	font-size: 14px;
+}

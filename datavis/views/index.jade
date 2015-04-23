@@ -1,13 +1,18 @@
 html
 	head
 		title= 'NETS 312 Epidemic Control'
-		link(rel='stylesheet', type='text/css', href='main.css')
 		script(type='text/javascript', src='vis.js')
 		link(rel='stylesheet', type='text/css', href='vis.css')
 		script(type='text/javascript', src='https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js')
 		link(rel='stylesheet', type='text/css', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css')
 		script(type='text/javascript', src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js')
 		script(type='text/javascript', src='main.js')
+		script(type='text/javascript', src='sigma.min.js')
+		script(type='text/javascript', src='plugins/sigma.parsers.gexf.min.js')
+		script(type='text/javascript', src='plugins/sigma.layout.forceAtlas2.min.js')
+		script(type='text/javascript', src='plugins/sigma.plugins.animate.min.js')
+
+		link(rel='stylesheet', type='text/css', href='main.css')
 	body
 		nav.navbar.navbar-default
 			.collapse.navbar-collapse
@@ -17,15 +22,26 @@ html
 					li
 						a(href='#reset') Reset
 					li
-						a(href='#slider') Time:
+						a Time:
 					li
 						a
-							input(type='range' id='timestep' value=100)
+							input(type='range' id='timestep' value=1 min=1 max=1000)
+					li
+						a Sacha Best
+					li
+						a Corey Loman
+					li
+						a Vincent Gubitosi
+
 		#main-row.row
-			#sidebar.col-md-2.black
+			#sidebar.col-md-3.black
 				ul.nav.nav-pills.nav-stacked.side-menu
+					li(role='presentation')
+						a Play
 					li(role="presentation").active
 						a Ebola 50,000 nodes
 					li(role="presentation") 
 						a Something else here
-			#container.col-md-10.black
+				#text-left.description.side-menu
+					h3 Project Description
+			#sigma.col-md-9.black
