@@ -40,6 +40,7 @@ def create_edge_filter(edge_list, output_file):
 		writer = csv.writer(f, delimiter=',')
 		writer.writerow(['id', 'latitude', 'longitude', 'population', 'capacity'])
 		for node in edge_nodes:
+			if node < 1: continue
 			print('locating ' + str(node))
 			full_node = node_map[node]
 			writer.writerow([node, full_node['lat'], full_node['lon'], full_node['pop'], full_node['cap']])
