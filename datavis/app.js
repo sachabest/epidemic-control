@@ -34,6 +34,10 @@ app.get('/sample.gexf', function (req, res ){
 	res.sendFile('sample.gexf', {root: '.'});
 });
 
+app.get('/states.json', function (req, res) {
+	res.sendFile('states.json', {root: '.'});
+});
+
 var server = app.listen(8080, function () {
 
 	var host = server.address().address;

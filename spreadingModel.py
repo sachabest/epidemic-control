@@ -156,7 +156,7 @@ class Models():
 						else:
 							node_dynamic_map[node.getId()] = [state_int]
 		json_str = json.dumps(node_dynamic_map);
-		with open('states.json') as outfile: outfile.write(json_str);
+		with open('states.json', 'w') as outfile: outfile.write(json_str);
 
 	'''
 	SIV Model

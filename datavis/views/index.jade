@@ -22,7 +22,7 @@ html
 					li
 						a(href='#reset') Reset
 					li
-						a(href='#slider') Time:
+						a Time:
 					li
 						a
 							input(type='range' id='timestep' value=100)
@@ -36,6 +36,9 @@ html
 		#main-row.row
 			#sidebar.col-md-3.black
 				ul.nav.nav-pills.nav-stacked.side-menu
+					li(role='presentation')
+						button(id='play', type='button').btn.btn-default
+							span.glyphicon.glyphicon-play-circle
 					li(role="presentation").active
 						a Ebola 50,000 nodes
 					li(role="presentation") 
