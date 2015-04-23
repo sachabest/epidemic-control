@@ -81,6 +81,7 @@ class SeedingStrategy:
 		return self.nodes
 
 	def cascadingSize(self):
+		print ("Finding nodes with the largest cascade sizes...")
 		def findCascade(theInfectedNodesNotYetFlipped):
 			numberInfectedNodes = 0
 			while (len(theInfectedNodesNotYetFlipped) > 0):
@@ -95,17 +96,11 @@ class SeedingStrategy:
 			return numberInfectedNodes
 
 		def reset():
-			#print("resetting")
 			for node in self.nodes:
 				if self.nodes[node] not in startingInfectedNodes:
 					self.nodes[node].setState('SUSCEPTIBLE')
 				else:
 					self.nodes[node].setState('INFECTED')
-					#infectedNodesNotYetFlipped.append(self.nodes[node])
-			#infectedNodesNotYetFlipped = startingInfectedNodes
-			#print ("Not yet flipped:")
-			#print (infectedNodesNotYetFlipped)
-			#print ("^")
 
 		def find_n_cascades(n, theInfectedNodesNotYetFlipped):
 			totalNumberInfectedNodes = 0
@@ -131,10 +126,6 @@ class SeedingStrategy:
 		while (len(newlyAddedStartingInfectedNodes) > 0):
 			print ("iteration")
 			for node in newlyAddedStartingInfectedNodes:
-				print ("next iteration")
-				print (newlyAddedStartingInfectedNodes)
-				print (infectedNodesNotYetFlipped)
-				print (startingInfectedNodes)
 				node.setState('SUSCEPTIBLE')
 				newlyAddedStartingInfectedNodes.remove(node)
 				infectedNodesNotYetFlipped.remove(node)
@@ -158,19 +149,5 @@ class SeedingStrategy:
 					infectedNodesNotYetFlipped.append(maxNeighborNode)
 				else:
 					startingInfectedNodes.append(node)
-		print ("Before Reset:")
-		for node in self.nodes:
-			if self.nodes[node].getState() == 'INFECTED':
-					print ("new infected node:")
-					print (node)
-					print (self.nodes[node])
 		reset()
-		print ("After reset:")
-		print ("Starting Infected Nodes:")
-		print (startingInfectedNodes)
-		for node in self.nodes:
-			if self.nodes[node].getState() == 'INFECTED':
-				print ("new infected node:")
-				print (node)
-				print (self.nodes[node])
 		return self.nodes
