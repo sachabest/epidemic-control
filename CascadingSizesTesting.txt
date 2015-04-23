@@ -1,0 +1,15 @@
+Running CascadingSizes:
+
+1 Node:
+infected ratio: 0.893832943013
+susceptible ratio: 0.0210772833724
+exposed ratio: 0
+vigilant ratio: 0
+recovered ratio: 0.0850897736144
+
+20 Nodes:
+infected ratio: 0.896174863388
+susceptible ratio: 0.0148321623731
+exposed ratio: 0
+vigilant ratio: 0
+recovered ratio: 0.0889929742389
