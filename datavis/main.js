@@ -14,7 +14,7 @@ $(document).ready(function() {
 				var id = nodeprop.id;
 				nodeprop.color = colors[timesteps[id][time]];
 				nodeprop.size = 1.5;
-				nodeprop.originalColor = colors[timesteps[id][time]];;
+				//nodeprop.originalColor = colors[timesteps[id][time]];;
 			}
 			s.refresh();
 		});
@@ -25,7 +25,7 @@ $(document).ready(function() {
 				$('#timestep').val(i);
 				$('#timestep').change();
 				i++;                    //  increment the counter
-	      		if (i < 200) {           //  if the counter < 10, call the loop function
+	      		if (i < 1000) {           //  if the counter < 10, call the loop function
 	         		play();           //  ..  again which will trigger another 
 	      		}                       //  ..  setTimeout()
 	   		}, 200)
@@ -35,7 +35,7 @@ $(document).ready(function() {
 			console.log('click');
 			i = 1;
 			play();
-			$('#play').text(playing);
+			$('#play').text('Playing');
 		});
 	});
 	var xmlhttp = new XMLHttpRequest();
