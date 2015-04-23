@@ -16,6 +16,16 @@ $(document).ready(function() {
 	xmlhttp.send();
 });
 
+$('#timestep').change(function () {
+	var time = $(this).val();
+	console.log(time);
+	for (var node = 1; node < sigma.nodes().length; node++) {
+		var nodeprop = sigma.nodes()[node];
+		var id = nodeprop.id;
+		nodeprop.color = colors[timesteps[id][time]];
+	}
+});
+
 $('#play').click(function () {
 	for (var i = 1; i < 1000; i++) {
 		setTimeout( function() {
@@ -27,3 +37,4 @@ $('#play').click(function () {
 		}, 250);
 	}
 });
+
