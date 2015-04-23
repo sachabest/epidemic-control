@@ -129,32 +129,32 @@ class Models():
 	#closest to ebola
 	def SIRSmodel(self):
 		node_dynamic_map = dict()
-		with open('states.csv','wb') as csvfile:
-			for i in xrange(self.time):
-				for node in self.nodes:
-					if node.getState() == 'SUSCEPTIBLE':
-						for neighbor in node.getNeighbors():
-							if neighbor.getState() == 'INFECTED':
-								success = node.flipCoin(self.beta, 'INFECTED')
-								#stop looping through the neighbors if the node we're looking at is infected
-								if success:
-									break
-					elif node.getState() == 'INFECTED':
-						node.flipCoin(self.delta, 'RECOVERED')
+		for i in xrange(self.time):
+			for node in self.nodes:
+				if node.getState() == 'SUSCEPTIBLE':
+					for neighbor in node.getNeighbors():
+						if neighbor.getState() == 'INFECTED':
+							success = node.flipCoin(self.beta, 'INFECTED')
+							print('infecting node: ' + node.getId())
+							#stop looping through the neighbors if the node we're looking at is infected
+							if success:
+								break
+				elif node.getState() == 'INFECTED':
+					node.flipCoin(self.delta, 'RECOVERED')
+				elif node.getState() == 'RECOVERED':
+					node.flipCoin(self.gamma, 'SUSCEPTIBLE')
+				# sample: [1.0, 2.0,a]; 
+				# downsampled to 20%
+				if i % 5 == 0:
+					state_int = 0;
+					if node.getState() == 'INFECTED':
+						state_int = 1
 					elif node.getState() == 'RECOVERED':
-						node.flipCoin(self.gamma, 'SUSCEPTIBLE')
-					# sample: [1.0, 2.0,a]; 
-					# downsampled to 20%
-					if i % 5 == 0:
-						state_int = 0;
-						if node.getState() == 'INFECTED':
-							state_int = 1
-						elif node.getState() == 'RECOVERED':
-							state_int = 2
-						if node.getId() in node_dynamic_map:
-							node_dynamic_map[node.getId()].append(state_int)
-						else:
-							node_dynamic_map[node.getId()] = [state_int]
+						state_int = 2
+					if (long(node.getId().strip())) in node_dynamic_map:
+						node_dynamic_map[long(node.getId().strip())].append(state_int)
+					else:
+						node_dynamic_map[long(node.getId().strip())] = [state_int]
 		json_str = json.dumps(node_dynamic_map);
 		with open('states.json', 'w') as outfile: outfile.write(json_str);
 
