@@ -2,6 +2,13 @@ body {
 	background-image: url('back.png');
 	background-size: cover;
 }
+.row {
+	margin: 0px 0px 0px 9px;
+	margin-top: 52px;
+}
+.list-group {
+	color: #334a58;
+}
 .sidebar-out {
 	position: fixed;
 	z-index: 1;

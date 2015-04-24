@@ -11,7 +11,7 @@ html
 		script(type='text/javascript', src='plugins/sigma.plugins.animate.min.js')
 		link(rel='stylesheet', type='text/css', href='main.css')
 	body
-		nav.navbar.navbar-default
+		nav.navbar.navbar-fixed-top.navbar-default
 			.collapse.navbar-collapse
 				ul.nav.navbar-nav
 					li.active
@@ -20,7 +20,7 @@ html
 						a Time:
 					li
 						a
-							input(type='range' id='timestep' value=1 min=1 max=999)
+							input(type='range' id='timestep' value=0 min=0 max=59)
 					li
 						a(href='https://github.com/sachabest') Sacha Best
 					li
@@ -34,11 +34,11 @@ html
 
 		#main-row.row
 			#sidebar.sidebar-out
-				#text-left.description.side-menu
+				#text-left1.description.side-menu
 					h3 Animated Visualizatoin of SIRS Spreading Model
 					button(type="button" id='play').btn.btn-primary.btn-lg
 						span Loading...
-				#text-left.description.side-menu
+				#text-left3.description.side-menu
 					h3 Project Description
 					p This is a graph visualization of a social contact network of people in Sierra Leone. The original dataset, supplied by the World Health Organization, contained over 5 million people (designated by nodes) and 90 million daily interactions between those people (designated by edges). The visualization shown here is a subgraph containing roughly 1200 nodes, demonstrating how ebola spreads throughout the network over a period of time. A yellow node corresponds to a person being "susceptible" to contracting ebola. A red node means the person is "infected" with the disease, and a green node corresponds to a "recovered" person. The spread of the disease was modeled using the SIRS model, which most closely matches how ebola actually spreads.
 			#sigma.col-md-12.fill
