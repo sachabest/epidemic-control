@@ -72,8 +72,8 @@ def main():
 		net.createNetwork(filename)
 		net.createNodes(net.getGraph())
 		theSeedingStrategy = seedingStrategies.SeedingStrategy(net.getGraph(), 2, net, 0.05)
-		net.updateNodes(theSeedingStrategy.cascadingSize())
-		simModel('SIRSmodel', net, output, 0.05, 0.0001, 0.01, 0.3, 0.1, 60)
+		net.updateNodes(theSeedingStrategy.kCoreDecomposition())
+		simModel('SIRSmodel', net, output, 0.05, 0.01, 0.01, 0.3, 0.1, 60)
 
 	infect_sum = 0
 	suscept_sum = 0
