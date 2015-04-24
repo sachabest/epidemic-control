@@ -14,8 +14,7 @@ The analysis section is used to extract relevant information from the original 9
 * project1.py: one implementation of how to load the data and extract a subgraph
 * parser.py: another implementation of how to load the data and extract a subgraph
 * spreadingModel.py: implementation of the six different spreading models discussed in Prakash's paper
-* seedingStrategies.py: implementation of seeding strategies to spread information based on largest degrees, eigenvector centrality, 
-                        k-core decomposition, and cascading size
+* seedingStrategies.py: implementation of seeding strategies to spread information based on largest degrees, eigenvector centrality, k-core decomposition (explained in Kitsak's paper), and cascading size (which utilizes the Hill Climbing Algorithm)
 * geolocator.py - creates a map of nodes to their latitude, longitude, population size, and capacity from SLE_locations.txt in output
 
 The datavis section is a NodeJS web application that uses sigma.js to visualize a small subset of the graph created by the analysis section. This graph is animated over time to show how Ebola spread through Sierra Leone in 2014. Relevant files include:
@@ -28,3 +27,10 @@ The datavis section is a NodeJS web application that uses sigma.js to visualize 
 * sample.gexf: the Gephi output used by sigma.js
 * states.json: the infected/recovered/susceptible data for each node at each timestep
 
+Helpful Resources:
+http://nets312.sachabest.com - Data Visualization of Subgraph
+http://networks.asc.upenn.edu/?page_id=325 - Project Blog
+http://www.vbi.vt.edu/ndssl/ebola/ebola-data - Dataset Source Page
+https://drive.google.com/file/d/0B4O42U-pfdyhcmNTbGhKU0tLcEE/view?usp=sharing - Final Presentation PowerPoint
+http://people.cs.vt.edu/~badityap/papers/gen-threshold-kais12.pdf - Prakash's Research Paper
+http://www.nature.com/nphys/journal/v6/n11/fig_tab/nphys1746_ft.html - Kitsak's Research Paper
