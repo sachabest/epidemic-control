@@ -141,7 +141,6 @@ class Models():
 					for neighbor in node.getNeighbors():
 						if neighbor.getState() == 'INFECTED':
 							success = node.flipCoin(self.beta, 'INFECTED')
-							print('infecting node: ' + node.getId())
 							#stop looping through the neighbors if the node we're looking at is infected
 							if success:
 								break
