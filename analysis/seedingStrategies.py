@@ -3,14 +3,13 @@ import network
 import networkx as nx
 import copy
 from operator import itemgetter
-#from numpy.linalg import eig
 
 class SeedingStrategy:
-
 
 	# self.net = net.getGraph() -- networkX
 	# self.numberNodes = number of seed nodes
 	# self.nodes = net.getNodes() -- our own node class
+	# self.beta = beta -- the value of beta used in spreading models
 	def __init__(self, net, numberNodes, nodes, beta):
 		self.net = net
 		self.numberNodes = numberNodes
