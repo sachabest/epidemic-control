@@ -8,6 +8,12 @@ import sys
 import seedingStrategies
 from operator import itemgetter
 
+infected = []
+susceptible = []
+recovered = []
+vigilant = []
+exposed = []
+
 def simModel(model_name, net, output, b, d, g, e, th, ti):
 	m = model.Models(net.getNodes(), b, d, g, e, th, ti)
 
@@ -36,12 +42,15 @@ def simModel(model_name, net, output, b, d, g, e, th, ti):
 			exposed_ratio += 1.0 / total_nodes
 		f.write(nodestr)
 	
-	print model_name + '\n'
-	print 'infected ratio: ' + str(infect_ratio)
-	print 'susceptible ratio: ' + str(suscept_ratio)
-	print 'exposed ratio: ' + str(exposed_ratio)
-	print 'vigilant ratio: ' + str(vigilant_ratio)
-	print 'recovered ratio: ' + str(recovered_ratio) + '\n'
+	infected.append(infect_ratio)
+	susceptible.append(suscept_ratio)
+	recovered.append(recovered_ratio)
+	#print model_name + '\n'
+	#print 'infected ratio: ' + str(infect_ratio)
+	#print 'susceptible ratio: ' + str(suscept_ratio)
+	#print 'exposed ratio: ' + str(exposed_ratio)
+	#print 'vigilant ratio: ' + str(vigilant_ratio)
+	#print 'recovered ratio: ' + str(recovered_ratio) + '\n'
 	f.write('\n')
 	f.write('infected ratio: ' + str(infect_ratio) + '\n')
 	f.write('susceptible ratio: ' + str(suscept_ratio) + '\n')
@@ -56,12 +65,26 @@ def main():
 		print 'USAGE: aggregator.py input_file output_file'
 	filename = sys.argv[1]
 	output = sys.argv[2]
-	net = network.Network()
-	net.createNetwork(filename)
-	net.createNodes(net.getGraph())
-	theSeedingStrategy = seedingStrategies.SeedingStrategy(net.getGraph(), 20, net, 0.7)
-	net.updateNodes(theSeedingStrategy.kCoreDecomposition())
+	numTrials = 1
 	#simModel("SISmodel", net, output, 0.1, 0.3, 0.1, 0.3, 0.1, 1000)
-	simModel('SIRSmodel', net, output, 0.7, 0.01, 0.01, 0.3, 0.1, 1000)
+	for i in xrange(numTrials):
+		net = network.Network()
+		net.createNetwork(filename)
+		net.createNodes(net.getGraph())
+		theSeedingStrategy = seedingStrategies.SeedingStrategy(net.getGraph(), 2, net, 0.05)
+		net.updateNodes(theSeedingStrategy.cascadingSize())
+		simModel('SIRSmodel', net, output, 0.05, 0.0001, 0.01, 0.3, 0.1, 60)
+
+	infect_sum = 0
+	suscept_sum = 0
+	recovered_sum = 0
+	for i in xrange(numTrials):
+		infect_sum += infected[i]
+		suscept_sum += susceptible[i]
+		recovered_sum += recovered[i]
+
+	print ('infected ratio: ' + str(infect_sum/numTrials))
+	print ('susceptible ratio: ' + str(suscept_sum/numTrials))
+	print ('recovered ratio: ' + str(recovered_sum/numTrials))
 if __name__ == '__main__':
 	main()
