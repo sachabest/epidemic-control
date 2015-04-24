@@ -2,6 +2,10 @@ body {
 	background-image: url('back.png');
 	background-size: cover;
 }
+.github {
+	margin-left: 10px;
+	position: inline-block;
+}
 .row {
 	margin: 0px 0px 0px 9px;
 	margin-top: 52px;
