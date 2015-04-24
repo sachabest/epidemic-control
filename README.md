@@ -14,6 +14,8 @@ The analysis section is used to extract relevant information from the original 9
 * project1.py: one implementation of how to load the data and extract a subgraph
 * parser.py: another implementation of how to load the data and extract a subgraph
 * spreadingModel.py: implementation of the six different spreading models discussed in Prakash's paper
+* seedingStrategies.py: implementation of seeding strategies to spread information based on largest degrees, eigenvector centrality, 
+                        k-core decomposition, and cascading size
 * geolocator.py - creates a map of nodes to their latitude, longitude, population size, and capacity from SLE_locations.txt in output
 
 The datavis section is a NodeJS web application that uses sigma.js to visualize a small subset of the graph created by the analysis section. This graph is animated over time to show how Ebola spread through Sierra Leone in 2014. Relevant files include:
