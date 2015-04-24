@@ -9,11 +9,11 @@ $(document).ready(function() {
 
 		$('#timestep').change(function () {
 			var time = $(this).val();
-			for (var node = 1; node < graph.nodes().length; node++) {
+			for (var node = 0; node < graph.nodes().length; node++) {
 				var nodeprop = graph.nodes()[node];
 				var id = nodeprop.id;
 				nodeprop.color = colors[timesteps[id][time]];
-				nodeprop.size = 1.5;
+				nodeprop.size = 1.5;g
 				//nodeprop.originalColor = colors[timesteps[id][time]];;
 			}
 			s.refresh();
