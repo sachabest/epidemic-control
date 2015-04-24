@@ -28,9 +28,9 @@ The datavis section is a NodeJS web application that uses sigma.js to visualize 
 * states.json: the infected/recovered/susceptible data for each node at each timestep
 
 Helpful Resources:
-http://nets312.sachabest.com - Data Visualization of Subgraph
-http://networks.asc.upenn.edu/?page_id=325 - Project Blog
-http://www.vbi.vt.edu/ndssl/ebola/ebola-data - Dataset Source Page
-https://drive.google.com/file/d/0B4O42U-pfdyhcmNTbGhKU0tLcEE/view?usp=sharing - Final Presentation PowerPoint
-http://people.cs.vt.edu/~badityap/papers/gen-threshold-kais12.pdf - Prakash's Research Paper
-http://www.nature.com/nphys/journal/v6/n11/fig_tab/nphys1746_ft.html - Kitsak's Research Paper
+* http://nets312.sachabest.com - Data Visualization of Subgraph
+* http://networks.asc.upenn.edu/?page_id=325 - Project Blog
+* http://www.vbi.vt.edu/ndssl/ebola/ebola-data - Dataset Source Page
+* https://drive.google.com/file/d/0B4O42U-pfdyhcmNTbGhKU0tLcEE/view?usp=sharing - Final Presentation PowerPoint
+* http://people.cs.vt.edu/~badityap/papers/gen-threshold-kais12.pdf - Prakash's Research Paper
+* http://www.nature.com/nphys/journal/v6/n11/fig_tab/nphys1746_ft.html - Kitsak's Research Paper
