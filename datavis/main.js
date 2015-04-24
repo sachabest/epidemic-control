@@ -13,7 +13,7 @@ $(document).ready(function() {
 				var nodeprop = graph.nodes()[node];
 				var id = nodeprop.id;
 				nodeprop.color = colors[timesteps[id][time]];
-				nodeprop.size = 1.5;g
+				nodeprop.size = 1.5;
 				//nodeprop.originalColor = colors[timesteps[id][time]];;
 			}
 			s.refresh();
@@ -26,11 +26,11 @@ $(document).ready(function() {
 				$('#timestep').change();
 				if (playing) {
 					i++;                    //  increment the counter
-		      		if (i < 1000) {           //  if the counter < 10, call the loop function
+		      		if (i < 60) {           //  if the counter < 10, call the loop function
 		         		play();           //  ..  again which will trigger another 
 		      		}
 		      	}
-	   		}, 50)
+	   		}, 200)
 		} 
 		$('#play').click(function () {
 			if (!playing) {
