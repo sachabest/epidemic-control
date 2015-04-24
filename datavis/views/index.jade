@@ -15,18 +15,20 @@ html
 			.collapse.navbar-collapse
 				ul.nav.navbar-nav
 					li.active
-						a(href='') NETS 312 Epidemic Control
+						a NETS 312 Epidemic Control
 					li
 						a Time:
 					li
 						a
-							input(type='range' id='timestep' value=0 min=0 max=59)
+							input(type='range' id='timestep' value=1 min=1 max=59)
 					li
-						a(href='https://github.com/sachabest') Sacha Best
+						a(target="_blank" href='https://github.com/sachabest/nets312') GitHub
 					li
-						a(href='https://github.com/cloman93') Corey Loman
+						a(target="_blank" href='https://github.com/sachabest') Sacha Best
 					li
-						a Vincent Gubitosi
+						a(target="_blank" href='https://github.com/cloman93') Corey Loman
+					li
+						a(target="_blank" href='https://github.com/gubitosi') Vincent Gubitosi
 					li
 						a Christina Nelson
 					li
@@ -35,7 +37,7 @@ html
 		#main-row.row
 			#sidebar.sidebar-out
 				#text-left1.description.side-menu
-					h3 Animated Visualizatoin of SIRS Spreading Model
+					h3 Animated Visualization of SIRS Spreading Model
 					button(type="button" id='play').btn.btn-primary.btn-lg
 						span Loading...
 				#text-left3.description.side-menu
