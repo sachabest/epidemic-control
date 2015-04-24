@@ -6,14 +6,13 @@ $(document).ready(function() {
 	var graph;
 	sigma.parsers.gexf('sample.gexf', { container: 'sigma'}, function(s) {
 		graph = s.graph;
-
 		$('#timestep').change(function () {
 			var time = $(this).val();
-			for (var node = 0; node < graph.nodes().length; node++) {
+			for (var node = 1; node < graph.nodes().length; node++) {
 				var nodeprop = graph.nodes()[node];
 				var id = nodeprop.id;
 				nodeprop.color = colors[timesteps[id][time]];
-				nodeprop.size = 1.5;
+				nodeprop.size = 1;
 				//nodeprop.originalColor = colors[timesteps[id][time]];;
 			}
 			s.refresh();
@@ -44,19 +43,18 @@ $(document).ready(function() {
 				$('#play').text('Play');
 			}
 		});
+		var xmlhttp = new XMLHttpRequest();
+		xmlhttp.onreadystatechange = function() {
+		    if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+		        timesteps = JSON.parse(xmlhttp.responseText);
+		        console.log('json back');
+				$('#play').prop('disabled', false);
+				$('#play > span').text("Play");
+				$('#timestep').change();
+		   	}	
+		};
+		xmlhttp.open("GET", 'states.json', true);
+		xmlhttp.send();
 	});
-	var xmlhttp = new XMLHttpRequest();
-	xmlhttp.onreadystatechange = function() {
-	    if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-	        timesteps = JSON.parse(xmlhttp.responseText);
-	        console.log('json back');
-			$('#play').prop('disabled', false);
-			$('#play > span').text("Play");
-			$('#timestep').change();
 
-	   	}	
-	};
-	xmlhttp.open("GET", 'states.json', true);
-	xmlhttp.send();
-	
 });
