@@ -31,6 +31,7 @@ Helpful Resources:
 * http://nets312.sachabest.com - Data Visualization of Subgraph
 * http://networks.asc.upenn.edu/?page_id=325 - Project Blog
 * http://www.vbi.vt.edu/ndssl/ebola/ebola-data - Dataset Source Page
+* https://docs.google.com/document/d/1NI73mFVAOFmrqfsX0XGiJL5o2gze5K-YjJbx6plw38k/edit?usp=sharing - Final Report
 * https://drive.google.com/file/d/0B4O42U-pfdyhcmNTbGhKU0tLcEE/view?usp=sharing - Final Presentation PowerPoint
 * http://people.cs.vt.edu/~badityap/papers/gen-threshold-kais12.pdf - Prakash's Research Paper
 * http://www.nature.com/nphys/journal/v6/n11/fig_tab/nphys1746_ft.html - Kitsak's Research Paper
